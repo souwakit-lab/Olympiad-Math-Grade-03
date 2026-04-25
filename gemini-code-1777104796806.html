@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>敏達數學：三年級挑戰 (完整沉浸版)</title>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+
+    <style>
+        :root {
+            --primary-orange: #FF9800;
+            --accent-red: #FF5722;
+            --bg-gradient: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+        }
+
+        body { font-family: 'PingFang TC', 'Microsoft JhengHei', sans-serif; background: var(--bg-gradient); margin: 0; padding: 15px; color: #333; line-height: 1.6; min-height: 100vh; }
+        .container { max-width: 600px; margin: 0 auto; background: white; border-radius: 25px; padding: 25px; box-shadow: 0 15px 35px rgba(0,0,0,0.2); }
+        
+        h1 { color: var(--accent-red); font-size: 26px; text-align: center; margin-bottom: 25px; text-shadow: 1px 1px 2px rgba(0,0,0,0.1); }
+        
+        /* 視圖切換邏輯 */
+        #menu-view { display: block; animation: fadeIn 0.5s ease-out; }
+        .exercise-section { display: none; animation: slideIn 0.5s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* 目錄網格樣式 */
+        .toc-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 20px; }
+        .toc-item { 
+            background: #f8f9fa; border: 2px solid #e9ecef; border-radius: 18px; padding: 15px; 
+            text-align: center; cursor: pointer; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            color: #495057; font-weight: bold;
+        }
+        .toc-item:hover { transform: translateY(-5px); border-color: var(--primary-orange); background: #fffaf0; box-shadow: 0 8px 15px rgba(255,152,0,0.2); }
+        .toc-icon { font-size: 28px; margin-bottom: 8px; }
+        .toc-text { font-size: 15px; }
+
+        /* 頂部返回按鈕 */
+        .top-back-btn { display: inline-flex; align-items: center; background: none; border: none; color: #757575; font-size: 14px; font-weight: bold; cursor: pointer; margin-bottom: 15px; padding: 5px 0; transition: color 0.2s; }
+        .top-back-btn:hover { color: var(--accent-red); }
+
+        .section-header { font-size: 20px; color: #3F51B5; text-align: center; margin-bottom: 20px; padding: 10px; background: #E8EAF6; border-radius: 10px; font-weight: bold; }
+        .q-separator { border: 0; height: 3px; background: #eee; margin: 30px 0; border-radius: 2px; }
+
+        /* 圖片佔位符樣式 */
+        .content-img { max-width: 100%; height: auto; border-radius: 10px; margin: 15px auto; display: block; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border: 2px solid #FFEFD5; }
+
+        /* 卡片共用樣式 */
+        .card { border-radius: 15px; padding: 15px 15px 30px 15px; margin-bottom: 18px; position: relative; transition: all 0.3s ease; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        h3 { margin: 0 0 10px 0; font-size: 17px; display: flex; align-items: center; }
+        .title-icon { font-size: 22px; margin-right: 8px; }
+        .math-text { font-family: 'Courier New', Courier, monospace; background: #f4f4f4; padding: 2px 5px; border-radius: 4px; font-weight: bold; }
+        
+        /* 互動效果 */
+        .hidden-card { display: none; opacity: 0; }
+        .show { display: block; animation: fadeInUp 0.5s forwards; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .clickable-step { cursor: pointer; border: 2px dashed #ccc; }
+        .clickable-step:hover { border-color: var(--accent-red); background: #fffcf0; }
+        .step-unlocked { border: 2px solid transparent !important; cursor: default; }
+
+        .click-hint { position: absolute; bottom: 10px; right: 15px; background: var(--accent-red); color: white; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; animation: pulse 1.2s infinite; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+        
+        /* 卡片配色 */
+        .card-question { background: #FFF3E0; border-left: 8px solid #FF9800; padding-bottom: 15px; }
+        .intro-prompt { background: #FFF9C4; border-left: 8px solid #FFC107; }
+        .step-one { background: #E3F2FD; border-left: 8px solid #2196F3; }
+        .step-two { background: #F3E5F5; border-left: 8px solid #9C27B0; }
+        .step-three { background: #FFF3E0; border-left: 8px solid #FF5722; }
+        .final-answer { background: #E8F5E9; border-left: 8px solid #4CAF50; padding-bottom: 15px; }
+
+        .finish-btn { display: block; text-align: center; margin: 25px auto 0; padding: 12px 30px; background: var(--primary-orange); color: white; border: none; border-radius: 25px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 10px rgba(255,152,0,0.3); transition: transform 0.2s, background 0.2s; }
+        .finish-btn:hover { background: var(--accent-red); transform: scale(1.05); }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        
+        <div id="menu-view">
+            <h1>🏆 三年級奧數智能挑戰</h1>
+            <p style="text-align:center; color:#666; font-size:14px; margin-bottom:20px;">選擇一個單元，進入專注模式 👇</p>
+            
+            <div class="toc-grid">
+                <div class="toc-item" onclick="startExercise('c1')"><span class="toc-icon">🔢</span><span class="toc-text">1. 數列排列規律</span></div>
+                <div class="toc-item" onclick="startExercise('c2')"><span class="toc-icon">📐</span><span class="toc-text">2. 數圖形</span></div>
+                <div class="toc-item" onclick="startExercise('c3')"><span class="toc-icon">🧮</span><span class="toc-text">3. 整數加減巧算</span></div>
+                <div class="toc-item" onclick="startExercise('c4')"><span class="toc-icon">➕</span><span class="toc-text">4. 等差數列</span></div>
+                <div class="toc-item" onclick="startExercise('c5')"><span class="toc-icon">📦</span><span class="toc-text">5. 歸一問題</span></div>
+                <div class="toc-item" onclick="startExercise('c6')"><span class="toc-icon">👨‍🏫</span><span class="toc-text">6. 倍數問題</span></div>
+                <div class="toc-item" onclick="startExercise('c7')"><span class="toc-icon">⏪</span><span class="toc-text">7. 還原問題</span></div>
+                <div class="toc-item" onclick="startExercise('c8')"><span class="toc-icon">🎭</span><span class="toc-text">8. 有趣的餘數</span></div>
+                <div class="toc-item" onclick="startExercise('c9')"><span class="toc-icon">⚖️</span><span class="toc-text">9. 等量代換</span></div>
+                <div class="toc-item" onclick="startExercise('c10')"><span class="toc-icon">🌳</span><span class="toc-text">10. 植樹問題</span></div>
+            </div>
+        </div>
+
+        <div id="c1" class="exercise-section">
+            <button class="top-back-btn" onclick="returnToMenu()">⬅ 返回目錄</button>
+            <div class="section-header">第一關：數列的排列規律</div>
+            
+            <div class="card card-question">
+                <h3><span class="title-icon">📜</span>第 1 題</h3>
+                <p>觀察下面的數列，分別找出各自的排列規律，並填上合適的數：<br>
+                （1）3，6，9，12，（ ），（ ）。<br>
+                （2）17，13，9，（ ），1。<br>
+                （3）5，15，45，（ ），405。<br>
+                （4）256，64，（ ），4，1。</p>
+            </div>
+            <div class="card intro-prompt clickable-step" data-next="c1-q1-m1">
+                <h3><span class="title-icon">💡</span>破題提示</h3>
+                <p>從左往右觀察相鄰的兩個數字，看看它們是加、減、乘還是除以了相同的數？</p>
+                <div class="click-hint">看第一小題解法 👆</div>
+            </div>
+            <div class="card step-one hidden-card clickable-step" id="c1-q1-m1" data-next="c1-q1-m2">
+                <h3><span class="title-icon">🕵️‍♂️</span>第 (1) 題：方法一 (加法)</h3>
+                <p>前一個數 + 3 = 後一個數。<br>12 + 3 = <span class="math-text">15</span>，15 + 3 = <span class="math-text">18</span>。</p>
+                <div class="click-hint">看方法二 👆</div>
+            </div>
+            <div class="card step-two hidden-card clickable-step" id="c1-q1-m2" data-next="c1-q1-ans">
+                <h3><span class="title-icon">🚀</span>第 (1) 題：方法二 (乘法)</h3>
+                <p>第幾個數就是幾的 3 倍。<br>第5個：5 × 3 = <span class="math-text">15</span>，第6個：6 × 3 = <span class="math-text">18</span>。</p>
+                <div class="click-hint">看其他題解答 👆</div>
+            </div>
+            <div class="card final-answer hidden-card" id="c1-q1-ans">
+                <h3><span class="title-icon">🏆</span>第 (2)~(4) 題解答</h3>
+                <p>（2）規律是「- 4」。9 - 4 = <strong>5</strong>。<br>
+                （3）規律是「× 3」。45 × 3 = <strong>135</strong>。<br>
+                （4）規律是「÷ 4」。64 ÷ 4 = <strong>16</strong>。</p>
+            </div>
+
+            <hr class="q-separator">
+
+            <div class="card card-question">
+                <h3><span class="title-icon">📜</span>第 2 題</h3>
+                <p>觀察下面數列，找出規律並填空：<br>28，24，（ ），16，12，（ ）</p>
+            </div>
+            <div class="card intro-prompt clickable-step" data-next="c1-q2-m1">
+                <h3><span class="title-icon">💡</span>破題提示</h3>
+                <p>這組數字越來越小，試試看相減！</p>
+                <div class="click-hint">看方法一 👆</div>
+            </div>
+            <div class="card step-one hidden-card clickable-step" id="c1-q2-m1" data-next="c1-q2-m2">
+                <h3><span class="title-icon">🕵️‍♂️</span>方法一：相鄰相減</h3>
+                <p>前一個數 - 4 = 後一個數。<br>24 - 4 = <span class="math-text">20</span>，12 - 4 = <span class="math-text">8</span>。</p>
+                <div class="click-hint">看方法二 👆</div>
+            </div>
+            <div class="card step-two hidden-card clickable-step" id="c1-q2-m2" data-next="c1-q2-ans">
+                <h3><span class="title-icon">🚀</span>方法二：倍數遞減</h3>
+                <p>每個數都是從 32 開始，依次減去 4 的倍數。<br>32 - (3 × 4) = <span class="math-text">20</span>，32 - (6 × 4) = <span class="math-text">8</span>。</p>
+                <div class="click-hint">看答案 👆</div>
+            </div>
+            <div class="card final-answer hidden-card" id="c1-q2-ans">
+                <h3><span class="title-icon">🏆</span>最終解答</h3>
+                <strong>✅ 答：括號中分別填入 20 和 8。</strong>
+            </div>
+            <button class="finish-btn" onclick="returnToMenu()">🎉 完成單元，回目錄</button>
+        </div>
+
+        <div id="c2" class="exercise-section">
+            <button class="top-back-btn" onclick="returnToMenu()">⬅ 返回目錄</button>
+            <div class="section-header">第二關：數圖形</div>
+
+            <div class="card card-question">
+                <h3><span class="title-icon">📜</span>第 1 題</h3>
+                <p>一列往返于珠海和上海之間的火車沿途要停靠 7 站（加上起訖共 9 站），鐵路部門要為這趟車準備多少種車票？</p>
+                <img src="train_stations.png" alt="火車站點圖" class="content-img" onerror="this.style.display='none'">
+            </div>
+            <div class="card intro-prompt clickable-step" data-next="c2-q1-m1">
+                <h3><span class="title-icon">💡</span>破題提示</h3>
+                <p>把每個站點看成線段上的端點，這其實是一個「數線段」的問題，而且要考慮去程和回程喔！</p>
+                <div class="click-hint">看方法一 👆</div>
+            </div>
+            <div class="card step-one hidden-card clickable-step" id="c2-q1-m1" data-next="c2-q1-m2">
+                <h3><span class="title-icon">🕵️‍♂️</span>方法一：按基本線段分類</h3>
+                <p>由 1 條基本線段組成的有 8 條，由 2 條組成的有 7 條... 一直到由 8 條組成的 1 條。<br>單程線段總數 = 8+7+6+5+4+3+2+1 = 36（條）。</p>
+                <div class="click-hint">看方法二 👆</div>
+            </div>
+            <div class="card step-two hidden-card clickable-step" id="c2-q1-m2" data-next="c2-q1-m3">
+                <h3><span class="title-icon">🚀</span>方法二：按左端點分類</h3>
+                <p>以 A 為左端點有 8 條，以 B 為左端點有 7 條...<br>總數一樣是 8+7+6+5+4+3+2+1 = 36（條）。</p>
+                <div class="click-hint">看方法三 👆</div>
+            </div>
+            <div class="card step-three hidden-card clickable-step" id="c2-q1-m3" data-next="c2-q1-ans">
+                <h3><span class="title-icon">🧠</span>方法三：乘法原理公式</h3>
+                <p>9 個點每個都能和其他 8 點相連，但每條線會重複計算一次，所以除以 2。<br>9 × (9 - 1) ÷ 2 = 36（條）。</p>
+                <div class="click-hint">看最終答案 👆</div>
+            </div>
+            <div class="card final-answer hidden-card" id="c2-q1-ans">
+                <h3><span class="title-icon">🏆</span>最終解答</h3>
+                <p>單程有 36 種，但因為往返車票不同（去程和回程），所以需要：<br>36 × 2 = 72（種）。</p>
+                <strong>✅ 答：要準備 72 種車票。</strong>
+            </div>
+
+            <hr class="q-separator">
+
+            <div class="card card-question">
+                <h3><span class="title-icon">📜</span>第 2 題</h3>
+                <p>圖中（A—B—C—D—E，共 4 個相連的小長方形）一共有多少個長方形？</p>
+            </div>
+            <div class="card intro-prompt clickable-step" data-next="c2-q2-m1">
+                <h3><span class="title-icon">💡</span>破題提示</h3>
+                <p>數長方形的方法和數線段是一樣的！分類有序數，不重複、不遺漏。</p>
+                <div class="click-hint">看解析 👆</div>
+            </div>
+            <div class="card step-one hidden-card clickable-step" id="c2-q2-m1" data-next="c2-q2-ans">
+                <h3><span class="title-icon">🕵️‍♂️</span>分析過程</h3>
+                <p>先數底邊上的線段數：<br>
+                1 小段合成：4 條<br>
+                2 段合成：3 條<br>
+                3 段合成：2 條<br>
+                4 段合成：1 條<br>
+                總線段數：4+3+2+1 = 10（條）。</p>
+                <div class="click-hint">看答案 👆</div>
+            </div>
+            <div class="card final-answer hidden-card" id="c2-q2-ans">
+                <h3><span class="title-icon">🏆</span>最終解答</h3>
+                <p>長方形個數 = 底邊上線段總條數。</p>
+                <strong>✅ 答：圖中一共有 10 個長方形。</strong>
+            </div>
+            <button class="finish-btn" onclick="returnToMenu()">🎉 完成單元，回目錄</button>
+        </div>
+
+        <div id="c3" class="exercise-section">
+            <button class="top-back-btn" onclick="returnToMenu()">⬅ 返回目錄</button>
+            <div class="section-header">第三關：整數加減法的巧算</div>
+
+            <div class="card card-question">
+                <h3><span class="title-icon">📜</span>第 1 題</h3>
+                <p>樂樂買了 165 元上衣、178 元褲子、835 元鞋子、69 元帽子和 22 元襪子。快速算出一共花了多少錢？</p>
+            </div>
+            <div class="card intro-prompt clickable-step" data-next="c3-q1-s1">
+                <h3><span class="title-icon">💡</span>破題提示</h3>
+                <p>不要從左到右死算！觀察數字的尾數，找找誰和誰可以「湊整」。</p>
+                <div class="click-hint">看解析 👆</div>
+            </div>
+            <div class="card step-one hidden-card clickable-step" id="c3-q1-s1" data-next="c3-q1-ans">
+                <h3><span class="title-icon">🕵️‍♂️</span>巧算步驟</h3>
+                <p>165 和 835 可以湊成 1000；178 和 22 可以湊成 200。<br>
+                (165 + 835) + (178 + 22) + 69<br>
+                = 1000 + 200 + 69</p>
+                <div class="click-hint">看答案 👆</div>
+            </div>
+            <div class="card final-answer hidden-card" id="c3-q1-ans">
+                <h3><span class="title-icon">🏆</span>最終解答</h3>
+                <strong>✅ 答：一共花了 1269 元。</strong>
+            </div>
+
+            <hr class="q-separator">
+
+            <div class="card card-question">
+                <h3><span class="title-icon">📜</span>第 2 題</h3>
+                <p>計算： 567 − 123 − 77</p>
+            </div>
+            <div class="card intro-prompt clickable-step" data-next="c3-q2-s1">
+                <h3><span class="title-icon">💡</span>破題提示</h3>
+                <p>減法性質巧算口訣：連續減去兩個數，等於減去這兩個數的「和」！</p>
+                <div class="click-hint">看解析 👆</div>
+            </div>
+            <div class="card step-one hidden-card clickable-step" id="c3-q2-s1" data-next="c3-q2-ans">
+                <h3><span class="title-icon">🕵️‍♂️</span>合併減數</h3>
+                <p>觀察發現 123 + 77 剛好湊成整百 (200)，合併起來減更簡單！<br>
+                567 − (123 + 77)<br>
+                = 567 − 200</p>
+                <div class="click-hint">看答案 👆</div>
+            </div>
+            <div class="card final-answer hidden-card" id="c3-q2-ans">
+                <h3><span class="title-icon">🏆</span>最終解答</h3>
+                <strong>✅ 答：結果為 367。</strong>
+            </div>
+            <button class="finish-btn" onclick="returnToMenu()">🎉 完成單元，回目錄</button>
+        </div>
+
+        <div id="c4" class="exercise-section">
+            <button class="top-back-btn" onclick="returnToMenu()">⬅ 返回目錄</button>
+            <div class="section-header">第四關：等差數列</div>
+
+            <div class="card card-question">
+                <h3><span class="title-icon">📜</span>第 1 題</h3>
+                <p>計算：101 + 102 + 103 + 104 + 105 + 106 + 107 + 108 + 109 + 110</p>
+            </div>
+            <div class="card intro-prompt clickable-step" data-next="c4-q1-s1">
+                <h3><span class="title-icon">💡</span>破題提示</h3>
+                <p>這是一個等差數列求和！可以使用公式：(首項 + 末項) × 項數 ÷ 2。</p>
+                <div class="click-hint">代入公式 👆</div>
+            </div>
+            <div class="card step-one hidden-card clickable-step" id="c4-q1-s1" data-next="c4-q1-ans">
+                <h3><span class="title-icon">🕵️‍♂️</span>計算過程</h3>
+                <p>首項 = 101，末項 = 110，共有 10 項。<br>
+                (101 + 110) × 10 ÷ 2<br>
+                = 211 × 10 ÷ 2</p>
+                <div class="click-hint">看答案 👆</div>
+            </div>
+            <div class="card final-answer hidden-card" id="c4-q1-ans">
+                <h3><span class="title-icon">🏆</span>最終解答</h3>
+                <strong>✅ 答：總和為 1055。</strong>
+            </div>
+
+            <hr class="q-separator">
+
+            <div class="card card-question">
+                <h3><span class="title-icon">📜</span>第 2 題</h3>
+                <p>工地上有一堆鋼管，最高層 20 根，最底層 90 根，中間還有 9 層，每層比上一層多 7 根。這堆鋼管共有幾根？</p>
+            </div>
+            <div class="card intro-prompt clickable-step" data-next="c4-q2-s1">
+                <h3><span class="title-icon">💡</span>破題提示</h3>
+                <p>一樣是等差數列！先弄清楚「項數」(總共有幾層) 是多少？</p>
+                <div class="click-hint">看解析 👆</div>
+            </div>
+            <div class="card step-one hidden-card clickable-step" id="c4-q2-s1" data-next="c4-q2-ans">
+                <h3><span class="title-icon">🕵️‍♂️</span>找出項數與代入</h3>
+                <p>頂層1層 + 中間9層 + 底層1層 = 11 層（項數）。<br>
+                或者利用公式：(90 - 20) ÷ 7 + 1 = 11（項）。<br>
+                求和：(20 + 90) × 11 ÷ 2 = 110 × 11 ÷ 2。</p>
+                <div class="click-hint">看答案 👆</div>
+            </div>
+            <div class="card final-answer hidden-card" id="c4-q2-ans">
+                <h3><span class="title-icon">🏆</span>最終解答</h3>
+                <strong>✅ 答：這堆鋼管共有 605 根。</strong>
+            </div>
+            <button class="finish-btn" onclick="returnToMenu()">🎉 完成單元，回目錄</button>
+        </div>
+
+        <div id="c5" class="exercise-section">
+            <button class="top-back-btn" onclick="returnToMenu()">⬅ 返回目錄</button>
+            <div class="section-header">第五關：歸一問題</div>
+
+            <div class="card card-question">
+                <h3><span class="title-icon">📜</span>第 1 題</h3>
+                <p>A班買 5 箱玩具，每箱 6 個，共 600 元。B班有 960 元，若包裝改為每箱 8 個，B班可以買幾箱？</p>
+            </div>
+            <div class="card intro-prompt clickable-step" data-next="c5-q1-m1">
+                <h3><span class="title-icon">💡</span>破題提示</h3>
+                <p>「歸一」的意思就是先求出「1個」玩具要多少錢！</p>
+                <div class="click-hint">看方法一 👆</div>
+            </div>
+            <div class="card step-one hidden-card clickable-step" id="c5-q1-m1" data-next="c5-q1-m2">
+                <h3><span class="title-icon">🕵️‍♂️</span>方法一：逐步除法</h3>
+                <p>先算1箱多少錢：600 ÷ 5 = 120 (元)。<br>
+                再算1個多少錢：120 ÷ 6 = 20 (元)。<br>
+                B班新包裝1箱要：20 × 8 = 160 (元)。<br>
+                960 ÷ 160 = 6 (箱)。</p>
+                <div class="click-hint">看方法二 👆</div>
+            </div>
+            <div class="card step-two hidden-card clickable-step" id="c5-q1-m2" data-next="c5-q1-ans">
+                <h3><span class="title-icon">🚀</span>方法二：總數除法</h3>
+                <p>先算A班共買幾個：6 × 5 = 30 (個)。<br>
+                算1個多少錢：600 ÷ 30 = 20 (元)。<br>
+                一樣得出 B班能買 960 ÷ (20 × 8) = 6 (箱)。</p>
+                <div class="click-hint">看答案 👆</div>
+            </div>
+            <div class="card final-answer hidden-card" id="c5-q1-ans">
+                <h3><span class="title-icon">🏆</span>最終解答</h3>
+                <strong>✅ 答：B班可以購得 6 箱這樣的玩具。</strong>
+            </div>
+
+            <hr class="q-separator">
+
+            <div class="card card-question">
+                <h3><span class="title-icon">📜</span>第 2 題</h3>
+                <p>工廠 6 台機器 3 小時能加工 1980 個零件。若每台效率提高 2 倍，8 台機器加工 7920 個零件需要幾小時？</p>
+            </div>
+            <div class="card intro-prompt clickable-step" data-next="c5-q2-s1">
+                <h3><span class="title-icon">💡</span>破題提示</h3>
+                <p>先求出最核心的數據：「1台」機器「1小時」原本能加工幾個零件？</p>
+                <div class="click-hint">看解析 👆</div>
+            </div>
+            <div class="card step-one hidden-card clickable-step" id="c5-q2-s1" data-next="c5-q2-ans">
+                <h3><span class="title-icon">🕵️‍♂️</span>歸一計算與代入</h3>
+                <p>1台機器1小時：1980 ÷ 3 ÷ 6 = 110 (個)。<br>
+                效率變2倍後，8台機器1小時產量：110 × 2 × 8 = 1760 (個)。<br>
+                需要時間：7920 ÷ 1760。</p>
+                <div class="click-hint">看答案 👆</div>
+            </div>
+            <div class="card final-answer hidden-card" id="c5-q2-ans">
+                <h3><span class="title-icon">🏆</span>最終解答</h3>
+                <strong>✅ 答：需要用 4.5 小時。</strong>
+            </div>
+            <button class="finish-btn" onclick="returnToMenu()">🎉 完成單元，回目錄</button>
+        </div>
+
+        <div id="c6" class="exercise-section">
+            <button class="top-back-btn" onclick="returnToMenu()">⬅ 返回目錄</button>
+            <div class="section-header">第六關：倍數問題</div>
+
+            <div class="card card-question">
+                <h3><span class="title-icon">📜</span>第 1 題</h3>
+                <p>圖書館有漫畫書和小說共 2400 本，小說是漫畫書的 3 倍。兩種書各有幾本？</p>
+            </div>
+            <div class="card intro-prompt clickable-step" data-next="c6-q1-s1">
+                <h3><span class="title-icon">💡</span>破題提示</h3>
+                <p>把漫畫書看作「1 份」，小說就是「3 份」，總共是幾份呢？</p>
+                <div class="click-hint">看解析 👆</div>
+            </div>
+            <div class="card step-one hidden-card clickable-step" id="c6-q1-s1" data-next="c6-q1-ans">
+                <h3><span class="title-icon">🕵️‍♂️</span>算出「一份」</h3>
+                <p>總份數 = 1 + 3 = 4 (份)。<br>
+                漫畫書 (1份) = 2400 ÷ 4 = 600 (本)。<br>
+                小說 (3份) = 600 × 3 = 1800 (本)。</p>
+                <div class="click-hint">看答案 👆</div>
+            </div>
+            <div class="card final-answer hidden-card" id="c6-q1-ans">
+                <h3><span class="title-icon">🏆</span>最終解答</h3>
+                <strong>✅ 答：漫畫書有 600 本，小說有 1800 本。</strong>
+            </div>
+
+            <hr class="q-separator">
+
+            <div class="card card-question">
+                <h3><span class="title-icon">📜</span>第 2 題</h3>
+                <p>三名工人共挖 60 米排水溝。乙再多挖 2 米就是甲的 2 倍；甲比丙少挖 6 米。三人各挖了幾米？</p>
+            </div>
+            <div class="card intro-prompt clickable-step" data-next="c6-q2-s1">
+                <h3><span class="title-icon">💡</span>破題提示</h3>
+                <p>把甲看成「1 倍」。如果我們從總數 60 米中調整一下，讓乙剛好是 2 倍，丙剛好和甲一樣長，總數會變成多少？</p>
+                <div class="click-hint">看解析 👆</div>
+            </div>
+            <div class="card step-one hidden-card clickable-step" id="c6-q2-s1" data-next="c6-q2-ans">
+                <h3><span class="title-icon">🕵️‍♂️</span>調整總數找甲</h3>
+                <p>讓丙減 6 米 (變 1 倍)，讓乙加 2 米 (變 2 倍)。<br>
+                調整後總長 = 60 - 6 + 2 = 56 (米)。此時總倍數是 1(甲) + 2(乙) + 1(丙) = 4 倍。<br>
+                甲 = 56 ÷ 4 = 14 (米)。<br>
+                乙 = 14 × 2 - 2 = 26 (米)。<br>
+                丙 = 14 + 6 = 20 (米)。</p>
+                <div class="click-hint">看答案 👆</div>
+            </div>
+            <div class="card final-answer hidden-card" id="c6-q2-ans">
+                <h3><span class="title-icon">🏆</span>最終解答</h3>
+                <strong>✅ 答：甲挖 14 米，乙挖 26 米，丙挖 20 米。</strong>
+            </div>
+            <button class="finish-btn" onclick="returnToMenu()">🎉 完成單元，回目錄</button>
+        </div>
+
+        <div id="c7" class="exercise-section">
+            <button class="top-back-btn" onclick="returnToMenu()">⬅ 返回目錄</button>
+            <div class="section-header">第七關：還原問題</div>
+
+            <div class="card card-question">
+                <h3><span class="title-icon">📜</span>第 1 題</h3>
+                <p>一條彩帶剪去一半後，再剪去剩下的一半，還剩下 5 米。原來長多少米？</p>
+            </div>
+            <div class="card intro-prompt clickable-step" data-next="c7-q1-s1">
+                <h3><span class="title-icon">💡</span>破題提示</h3>
+                <p>利用「倒推法」，像看電影倒帶一樣，從剩下的 5 米一步一步乘回去！</p>
+                <div class="click-hint">看解析 👆</div>
+            </div>
+            <div class="card step-one hidden-card clickable-step" id="c7-q1-s1" data-next="c7-q1-ans">
+                <h3><span class="title-icon">🕵️‍♂️</span>逐步還原</h3>
+                <p>第二次剪之前：剩下的 5 米 × 2 = 10 (米)。<br>
+                第一次剪之前：10 米 × 2 = 20 (米)。</p>
+                <div class="click-hint">看答案 👆</div>
+            </div>
+            <div class="card final-answer hidden-card" id="c7-q1-ans">
+                <h3><span class="title-icon">🏆</span>最終解答</h3>
+                <strong>✅ 答：這條彩帶原來長 20 米。</strong>
+            </div>
+
+            <hr class="q-separator">
+
+            <div class="card card-question">
+                <h3><span class="title-icon">📜</span>第 2 題</h3>
+                <p>樂兒算減法時，錯把被減數十位的 5 和個位的 9 看顛倒了，得到的差是 58。正確的差是多少？</p>
+            </div>
+            <div class="card intro-prompt clickable-step" data-next="c7-q2-m1">
+                <h3><span class="title-icon">💡</span>破題提示</h3>
+                <p>看顛倒的意思是把「59」看成了「95」。你可以選擇修正「差的變化量」，或先求出真正的減數！</p>
+                <div class="click-hint">看方法一 👆</div>
+            </div>
+            <div class="card step-one hidden-card clickable-step" id="c7-q2-m1" data-next="c7-q2-m2">
+                <h3><span class="title-icon">🕵️‍♂️</span>方法一：修正差額</h3>
+                <p>十位 5 變 9，差多了 40；個位 9 變 5，差少了 4。<br>
+                所以正確的差應該要把多算的減掉、少算的加回來：<br>
+                58 - 40 + 4 = 22。</p>
+                <div class="click-hint">看方法二 👆</div>
+            </div>
+            <div class="card step-two hidden-card clickable-step" id="c7-q2-m2" data-next="c7-q2-ans">
+                <h3><span class="title-icon">🚀</span>方法二：先找減數</h3>
+                <p>錯誤算式：95 - 減數 = 58，得出減數 = 95 - 58 = 37。<br>
+                正確算式：59 - 37 = 22。</p>
+                <div class="click-hint">看答案 👆</div>
+            </div>
+            <div class="card final-answer hidden-card" id="c7-q2-ans">
+                <h3><span class="title-icon">🏆</span>最終解答</h3>
+                <strong>✅ 答：正確的差是 22。</strong>
+            </div>
+            <button class="finish-btn" onclick="returnToMenu()">🎉 完成單元，回目錄</button>
+        </div>
+
+        <div id="c8" class="exercise-section">
+            <button class="top-back-btn" onclick="returnToMenu()">⬅ 返回目錄</button>
+            <div class="section-header">第八關：有趣的餘數</div>
+
+            <div class="card card-question">
+                <h3><span class="title-icon">📜</span>第 1 & 2 題</h3>
+                <p>1. 當除數是 6 時，餘數可能是幾？<br>
+                   2. 當除數是 7 時，餘數可能是幾？</p>
+            </div>
+            <div class="card intro-prompt clickable-step" data-next="c8-q1-s1">
+                <h3><span class="title-icon">💡</span>破題提示</h3>
+                <p>回憶一下除法的重要鐵則：「餘數一定要小於什麼數？」</p>
+                <div class="click-hint">看解析 👆</div>
+            </div>
+            <div class="card step-one hidden-card clickable-step" id="c8-q1-s1" data-next="c8-q1-ans">
+                <h3><span class="title-icon">🕵️‍♂️</span>除法鐵則</h3>
+                <p>在有餘數的除法中，餘數一定要小於除數！<br>
+                餘數最小是 1，最大比除數少 1。</p>
+                <div class="click-hint">看答案 👆</div>
+            </div>
+            <div class="card final-answer hidden-card" id="c8-q1-ans">
+                <h3><span class="title-icon">🏆</span>最終解答</h3>
+                <p>1. 除數是 6，餘數可能是：<strong>1、2、3、4、5</strong><br>
+                2. 除數是 7，餘數可能是：<strong>1、2、3、4、5、6</strong></p>
+            </div>
+            <button class="finish-btn" onclick="returnToMenu()">🎉 完成單元，回目錄</button>
+        </div>
+
+        <div id="c9" class="exercise-section">
+            <button class="top-back-btn" onclick="returnToMenu()">⬅ 返回目錄</button>
+            <div class="section-header">第九關：等量代換</div>
+
+            <div class="card card-question">
+                <h3><span class="title-icon">📜</span>第 1 題</h3>
+                <p>市集規定：1 頭豬換 3 隻羊，1 頭牛換 5 頭豬。那麼 1 頭牛可以換多少隻羊？</p>
+            </div>
+            <div class="card intro-prompt clickable-step" data-next="c9-q1-s1">
+                <h3><span class="title-icon">💡</span>破題提示</h3>
+                <p>把「豬」當作中間的橋樑，把牛換成豬，再把豬換成羊！</p>
+                <div class="click-hint">看解析 👆</div>
+            </div>
+            <div class="card step-one hidden-card clickable-step" id="c9-q1-s1" data-next="c9-q1-ans">
+                <h3><span class="title-icon">🕵️‍♂️</span>代換過程</h3>
+                <p>1 頭牛 = 5 頭豬。<br>
+                因為 1 頭豬 = 3 隻羊，所以 5 頭豬就是 5 個 3 隻羊：3 × 5 = 15。</p>
+                <div class="click-hint">看答案 👆</div>
+            </div>
+            <div class="card final-answer hidden-card" id="c9-q1-ans">
+                <h3><span class="title-icon">🏆</span>最終解答</h3>
+                <strong>✅ 答：1 頭牛可以換 15 隻羊。</strong>
+            </div>
+
+            <hr class="q-separator">
+
+            <div class="card card-question">
+                <h3><span class="title-icon">📜</span>第 2 題</h3>
+                <p>觀察天平，已知一個橘子 40 克，那麼一個蘋果多少克？</p>
+                <img src="balance_scale.png" alt="天平代換圖" class="content-img" onerror="this.style.display='none'">
+            </div>
+            <div class="card intro-prompt clickable-step" data-next="c9-q2-s1">
+                <h3><span class="title-icon">💡</span>破題提示</h3>
+                <p>天平兩邊重量相等。仔細比較左盤和右盤，兩邊都有的水果可以互相抵消喔！</p>
+                <div class="click-hint">看解析 👆</div>
+            </div>
+            <div class="card step-one hidden-card clickable-step" id="c9-q2-s1" data-next="c9-q2-ans">
+                <h3><span class="title-icon">🕵️‍♂️</span>觀察抵消</h3>
+                <p>右盤比左盤少了 1 個蘋果，多了 2 個橘子，而天平保持平衡。說明 1 個蘋果的重量 = 2 個橘子。<br>
+                1 個蘋果 = 40 × 2 = 80 (克)。</p>
+                <div class="click-hint">看答案 👆</div>
+            </div>
+            <div class="card final-answer hidden-card" id="c9-q2-ans">
+                <h3><span class="title-icon">🏆</span>最終解答</h3>
+                <strong>✅ 答：一個蘋果重 80 克。</strong>
+            </div>
+            <button class="finish-btn" onclick="returnToMenu()">🎉 完成單元，回目錄</button>
+        </div>
+
+        <div id="c10" class="exercise-section">
+            <button class="top-back-btn" onclick="returnToMenu()">⬅ 返回目錄</button>
+            <div class="section-header">第十關：植樹問題</div>
+
+            <div class="card card-question">
+                <h3><span class="title-icon">📜</span>第 1 題</h3>
+                <p>一條長 900 米的公路，兩邊每隔 20 米種一棵樹，起點與終點是站牌不種樹，一共要種多少棵樹？</p>
+            </div>
+            <div class="card intro-prompt clickable-step" data-next="c10-q1-s1">
+                <h3><span class="title-icon">💡</span>破題提示</h3>
+                <p>這是「兩端都不種樹」的類型，樹的數量會比段數少 1。別忘了馬路有「兩邊」！</p>
+                <div class="click-hint">看解析 👆</div>
+            </div>
+            <div class="card step-one hidden-card clickable-step" id="c10-q1-s1" data-next="c10-q1-ans">
+                <h3><span class="title-icon">🕵️‍♂️</span>計算段數與棵數</h3>
+                <p>段數 = 900 ÷ 20 = 45 (段)。<br>
+                一邊種的樹 = 45 - 1 = 44 (棵)。<br>
+                兩邊一共種 = 44 × 2 = 88 (棵)。</p>
+                <div class="click-hint">看答案 👆</div>
+            </div>
+            <div class="card final-answer hidden-card" id="c10-q1-ans">
+                <h3><span class="title-icon">🏆</span>最終解答</h3>
+                <strong>✅ 答：一共要種 88 棵樹。</strong>
+            </div>
+
+            <hr class="q-separator">
+
+            <div class="card card-question">
+                <h3><span class="title-icon">📜</span>第 2 題</h3>
+                <p>子安步行到 6 樓，要走 80 級臺階。如果他要步行到 8 樓，要走多少級臺階？</p>
+            </div>
+            <div class="card intro-prompt clickable-step" data-next="c10-q2-s1">
+                <h3><span class="title-icon">💡</span>破題提示</h3>
+                <p>爬樓梯其實就是「兩端都種樹」的模型！到 6 樓實際上是爬了幾個「樓層間隔」呢？</p>
+                <div class="click-hint">看解析 👆</div>
+            </div>
+            <div class="card step-one hidden-card clickable-step" id="c10-q2-s1" data-next="c10-q2-ans">
+                <h3><span class="title-icon">🕵️‍♂️</span>找出單層臺階數</h3>
+                <p>1 樓到 6 樓有 6 - 1 = 5 個間隔 (段數)。<br>
+                每層臺階 = 80 ÷ 5 = 16 (級)。<br>
+                到 8 樓有 8 - 1 = 7 個間隔。<br>
+                16 × 7 = 112 (級)。</p>
+                <div class="click-hint">看答案 👆</div>
+            </div>
+            <div class="card final-answer hidden-card" id="c10-q2-ans">
+                <h3><span class="title-icon">🏆</span>最終解答</h3>
+                <strong>✅ 答：要走 112 級臺階。</strong>
+            </div>
+            <button class="finish-btn" onclick="returnToMenu()">🎉 完成所有單元，回首頁</button>
+        </div>
+
+    </div>
+
+    <script>
+        // 1. 初始化 LaTeX 渲染
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: '$$', right: '$$', display: true},
+                    {left: '$', right: '$', display: false}
+                ]
+            });
+            bindUnlockEvents();
+        });
+
+        // 2. 進入專注模式：隱藏目錄，顯示指定題目
+        function startExercise(id) {
+            document.getElementById('menu-view').style.display = 'none';
+            document.querySelectorAll('.exercise-section').forEach(s => s.style.display = 'none');
+            
+            const target = document.getElementById(id);
+            if (target) {
+                target.style.display = 'block';
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // 3. 返回目錄模式，並「重置所有解鎖狀態」
+        function returnToMenu() {
+            document.querySelectorAll('.exercise-section').forEach(s => s.style.display = 'none');
+            document.getElementById('menu-view').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // 狀態重置邏輯
+            document.querySelectorAll('.hidden-card.show').forEach(card => {
+                card.classList.remove('show');
+            });
+
+            document.querySelectorAll('.step-unlocked').forEach(step => {
+                step.classList.remove('step-unlocked');
+                step.classList.add('clickable-step');
+                const hint = step.querySelector('.click-hint');
+                if (hint) {
+                    hint.style.display = 'block';
+                }
+            });
+        }
+
+        // 4. 智慧解鎖邏輯 (非破壞性隱藏)
+        function bindUnlockEvents() {
+            const allSteps = document.querySelectorAll('.clickable-step');
+            
+            allSteps.forEach(step => {
+                step.addEventListener('click', function() {
+                    if (this.classList.contains('step-unlocked')) return;
+
+                    const nextId = this.getAttribute('data-next');
+                    const nextEl = document.getElementById(nextId);
+                    
+                    if (nextEl) {
+                        nextEl.classList.add('show');
+                        
+                        const hint = this.querySelector('.click-hint');
+                        if (hint) {
+                            hint.style.display = 'none';
+                        }
+                        
+                        this.classList.remove('clickable-step');
+                        this.classList.add('step-unlocked');
+                        
+                        setTimeout(() => {
+                            nextEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }, 200);
+                    }
+                });
+            });
+        }
+    </script>
+</body>
+</html>
