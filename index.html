@@ -1,11 +1,9 @@
-敏達數學·閱讀（三年級挑戰）
-
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>敏達數學：三年級挑戰 (正向鼓勵完整版)</title>
+    <title>敏達數學·閱讀(三年級挑戰)</title>
     
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
@@ -77,7 +75,7 @@
         .step-three { background: #E0F2F1; border-left: 8px solid #009688; }
         .final-answer { background: #E8F5E9; border-left: 8px solid #4CAF50; padding-bottom: 15px; }
 
-        .finish-btn { display: block; text-align: center; margin: 25px auto 0; padding: 12px 30px; background: var(--primary-orange); color: white; border: none; border-radius: 25px; font-size: 16px; font-weight: bold; cursor: box-shadow: 0 4px 10px rgba(255,152,0,0.3); transition: transform 0.2s, background 0.2s; }
+        .finish-btn { display: block; text-align: center; margin: 25px auto 0; padding: 12px 30px; background: var(--primary-orange); color: white; border: none; border-radius: 25px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 10px rgba(255,152,0,0.3); transition: transform 0.2s, background 0.2s; }
         .finish-btn:hover { background: var(--accent-red); transform: scale(1.05); }
 
     </style>
@@ -86,8 +84,8 @@
     <div class="container">
         
         <div id="menu-view">
-            <h1>🏆 三年級奧數智能挑戰</h1>
-            <p style="text-align:center; color:#666; font-size:14px; margin-bottom:20px;">選擇一個單元，進入專注模式 👇</p>
+            <h1>🏆 敏達數學·閱讀(三年級挑戰)</h1>
+            <p style="text-align:center; color:#666; font-size:14px; margin-bottom:20px;">選擇一個單元，進入挑戰 👇</p>
             
             <div class="toc-grid">
                 <div class="toc-item" onclick="startExercise('c1')"><span class="toc-icon">🔢</span><span class="toc-text">1. 數列的排列規律</span></div>
@@ -477,10 +475,8 @@
             </div>
             <div class="card final-answer hidden-card" id="c6-q1-s1">
                 <h3><span class="title-icon">🏆</span>【分析與解答】</h3>
-                <p>根據題意，畫出線段圖：<br>
-                漫畫書<br>
-                共2400本<br>
-                小說</p>
+                <p>根據題意，畫出線段圖：</p>
+                <img src="line_diagram_books.png" alt="倍數線段圖" class="content-img" onerror="this.style.display='none'">
                 <p>從上圖中可以清楚的看出，把漫畫書的本數看做1倍數，小說是它的三倍，那麼2400本就相當於漫畫書的本數的（3+1）倍。這樣就可以求出1倍數的本數，也就是漫畫書的本數，然後再通過倍數關係去求小說的本數。</p>
                 <p>漫畫書的本數：2400÷（3+1）<br>
                 =600（本）</p>
