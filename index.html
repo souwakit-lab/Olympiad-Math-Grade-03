@@ -1,9 +1,11 @@
+敏達數學·閱讀（三年級挑戰）
+
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>敏達數學·閱讀（三年級挑戰）</title>
+    <title>敏達數學：三年級挑戰 (正向鼓勵完整版)</title>
     
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
@@ -84,8 +86,8 @@
     <div class="container">
         
         <div id="menu-view">
-            <h1>🏆 敏達數學·閱讀（三年級挑戰）</h1>
-            <p style="text-align:center; color:#666; font-size:14px; margin-bottom:20px;">選擇一個單元，進入挑戰 👇</p>
+            <h1>🏆 三年級奧數智能挑戰</h1>
+            <p style="text-align:center; color:#666; font-size:14px; margin-bottom:20px;">選擇一個單元，進入專注模式 👇</p>
             
             <div class="toc-grid">
                 <div class="toc-item" onclick="startExercise('c1')"><span class="toc-icon">🔢</span><span class="toc-text">1. 數列的排列規律</span></div>
@@ -479,4 +481,334 @@
                 漫畫書<br>
                 共2400本<br>
                 小說</p>
-                <p>從上圖中可以清楚的看出，把漫畫書的本數看做1倍數，小說是它的三倍，那麼2400本就相當於漫畫書的本數的（3+1）倍。這樣就可以求出1倍數的本數，也就是漫畫書的本數，然後再通過倍數關係去求小說的本數。</
+                <p>從上圖中可以清楚的看出，把漫畫書的本數看做1倍數，小說是它的三倍，那麼2400本就相當於漫畫書的本數的（3+1）倍。這樣就可以求出1倍數的本數，也就是漫畫書的本數，然後再通過倍數關係去求小說的本數。</p>
+                <p>漫畫書的本數：2400÷（3+1）<br>
+                =600（本）</p>
+                <p>小說的本數： 600×3 或 2400-600<br>
+                =1800（本） =1800（本）</p>
+                <p>答：漫畫書有600本，小說有1800本。</p>
+            </div>
+
+            <hr class="q-separator">
+
+            <div class="card card-question">
+                <h3><span class="title-icon">📜</span>第 2 題</h3>
+                <p>三名工人共挖了一條長 60米的排水溝。乙工人再多挖 2 米，將是甲工人挖的長度的 2 倍， 甲工人比丙工人少挖 6 米。三名工人各挖了幾米？</p>
+            </div>
+            <div class="card intro-prompt clickable-step" data-next="c6-q2-s1">
+                <h3><span class="title-icon">💡</span>思考時間</h3>
+                <p>想出來了嗎？點擊下方按鈕解鎖分析與解答！</p>
+                <div class="click-hint">查看分析與解答 👆</div>
+            </div>
+            <div class="card final-answer hidden-card" id="c6-q2-s1">
+                <h3><span class="title-icon">🏆</span>【分析與解答】</h3>
+                <p>三人共挖了 60 米，如果把甲工人挖的長度看作 1 倍，那麼用總長度 60 米減 6 米，就得到丙和甲一樣長，再加 2 米的長度，就得到乙是甲的2倍，對應的就是（ 1 + 2 +1） 倍。由此， 我們可以得出一倍數， 即甲工人挖的長度。</p>
+                <p>甲工人挖的米數：<br>
+                （ 60 - 6 + 2） ÷（1 + 2 + 1）<br>
+                = 14（米）</p>
+                <p>乙工人挖的米數：<br>
+                14×2 - 2<br>
+                = 26（米）</p>
+                <p>丙工人挖的米數：<br>
+                14+ 6<br>
+                = 20（米）</p>
+                <p>答： 甲工人挖了 14 米， 乙工人挖了 26 米， 丙工人挖了 20米。</p>
+            </div>
+            <button class="finish-btn" onclick="returnToMenu()">🎉 完成單元，回目錄</button>
+        </div>
+
+        <div id="c7" class="exercise-section">
+            <button class="top-back-btn" onclick="returnToMenu()">⬅ 返回目錄</button>
+            <div class="section-header">第七關：還原問題</div>
+
+            <div class="card card-question">
+                <h3><span class="title-icon">📜</span>第 1 題</h3>
+                <p>一條彩帶剪去一半後再剪去剩下的一半，還剩下5米，這條彩帶原來長多少米？</p>
+            </div>
+            <div class="card intro-prompt clickable-step" data-next="c7-q1-s1">
+                <h3><span class="title-icon">💡</span>思考時間</h3>
+                <p>想出來了嗎？點擊下方按鈕解鎖分析與解答！</p>
+                <div class="click-hint">查看分析與解答 👆</div>
+            </div>
+            <div class="card final-answer hidden-card" id="c7-q1-s1">
+                <h3><span class="title-icon">🏆</span>【分析與解答】</h3>
+                <p>根據題意可以分析：剩下的5米正好是第一次剪完後餘下的一半，所以用5×2就能得到第一次剪完後餘下的，然後根據題意第一次剪完餘下的正好是整條彩帶的一半，所以再乘以2就能得到整條彩帶原來的長度。</p>
+                <p>5×2×2<br>
+                =20（米）</p>
+                <p>答：這條彩帶原來長20米。</p>
+            </div>
+
+            <hr class="q-separator">
+
+            <div class="card card-question">
+                <h3><span class="title-icon">📜</span>第 2 題</h3>
+                <p>在做一道減法題時， 樂兒錯把被減數十位上的 5 和個位上的 9 看顛倒了， 得到的差是 58。正確的差是多少？</p>
+            </div>
+            <div class="card intro-prompt clickable-step" data-next="c7-q2-m1">
+                <h3><span class="title-icon">💡</span>思考時間</h3>
+                <p>想出來了嗎？點擊下方按鈕解鎖分析與解答！</p>
+                <div class="click-hint">查看分析與解答 👆</div>
+            </div>
+            <div class="card step-one hidden-card clickable-step" id="c7-q2-m1" data-next="c7-q2-m2">
+                <h3><span class="title-icon">🕵️‍♂️</span>【分析與解答】方法一 ：</h3>
+                <p>被減數十位上的5看成了9，那麼差就增加了90-50=40，而個位上的9看成了5，那就是差減少了9-5=4，只要將錯誤的差減去40加上4，就可以得到正確的差。</p>
+                <p>58-40+4<br>
+                =22</p>
+                <div class="click-hint">看方法二 👆</div>
+            </div>
+            <div class="card final-answer hidden-card" id="c7-q2-m2">
+                <h3><span class="title-icon">🏆</span>方法二 ：</h3>
+                <p>根據被減數錯看成95，而差是58，可以得到減數，然後再用正確的被減數減去減數，就能得到正確的差。</p>
+                <p>減數：<br>
+                95-58<br>
+                =37</p>
+                <p>正確的差：<br>
+                59-37<br>
+                =22</p>
+                <p>答：正確的差是22。</p>
+            </div>
+            <button class="finish-btn" onclick="returnToMenu()">🎉 完成單元，回目錄</button>
+        </div>
+
+        <div id="c8" class="exercise-section">
+            <button class="top-back-btn" onclick="returnToMenu()">⬅ 返回目錄</button>
+            <div class="section-header">第八關：有趣的餘數</div>
+
+            <div class="card card-question">
+                <h3><span class="title-icon">📜</span>第 1 題</h3>
+                <p>想一想，當除數是 6 時，餘數可能是幾呢？<br>
+                （ ）÷6 =（ ）……（ ）</p>
+            </div>
+            <div class="card intro-prompt clickable-step" data-next="c8-q1-s1">
+                <h3><span class="title-icon">💡</span>思考時間</h3>
+                <p>想出來了嗎？點擊下方按鈕解鎖分析與解答！</p>
+                <div class="click-hint">查看分析與解答 👆</div>
+            </div>
+            <div class="card final-answer hidden-card" id="c8-q1-s1">
+                <h3><span class="title-icon">🏆</span>【分析與解答】</h3>
+                <p>碰到比較抽象的問題時，我們不妨先舉出一些具體的例子：<br>
+                7÷6 = 1……1 &nbsp;&nbsp; 13÷6 = 2……1<br>
+                8÷6 = 1……2 &nbsp;&nbsp; 14÷6 = 2……2<br>
+                9÷6 = 1……3 &nbsp;&nbsp; 15÷6 = 2……3<br>
+                10÷6 = 1……4 &nbsp;&nbsp; 16÷6 = 2……4<br>
+                11÷6 = 1……5 &nbsp;&nbsp; 17÷6 = 2……5<br>
+                ……</p>
+                <p>觀察上述算式，並把每個餘數分別與除數 6 作比較，你發現了什麼規律？<br>
+                在有餘數的除法中：<br>
+                （1）被除數 = 除數 × 商 + 餘數；<br>
+                （2）一般情況下，兩個數相除，餘數一定小於除數，最大的餘數比除數小 1。<br>
+                因此，當除數是 6 時，餘數可能是 1、2、3、4、5。利用以上規律，我們可以解決很多有趣的數學問題。</p>
+            </div>
+
+            <hr class="q-separator">
+
+            <div class="card card-question">
+                <h3><span class="title-icon">📜</span>第 2 題</h3>
+                <p>當除數是 7 時，餘數可能是幾？<br>
+                （）÷7 =（）……（）</p>
+            </div>
+            <div class="card intro-prompt clickable-step" data-next="c8-q2-s1">
+                <h3><span class="title-icon">💡</span>思考時間</h3>
+                <p>想出來了嗎？點擊下方按鈕解鎖分析與解答！</p>
+                <div class="click-hint">查看分析與解答 👆</div>
+            </div>
+            <div class="card final-answer hidden-card" id="c8-q2-s1">
+                <h3><span class="title-icon">🏆</span>【分析與解答】</h3>
+                <p>我們先列舉一組真實除法算式舉例觀察 ：<br>
+                8 ÷ 7 = 1……1<br>
+                9 ÷ 7 = 1……2<br>
+                10 ÷ 7 = 1……3<br>
+                11 ÷ 7 = 1……4<br>
+                12 ÷ 7 = 1……5<br>
+                13 ÷ 7 = 1……6<br>
+                15 ÷ 7 = 2……1<br>
+                16 ÷ 7 = 2……2<br>
+                17 ÷ 7 = 2……3<br>
+                18 ÷ 7 = 2……4<br>
+                19 ÷ 7 = 2……5<br>
+                20 ÷ 7 = 2……6</p>
+                <p>觀察規律 ：<br>
+                在有餘數的除法裡 ：<br>
+                餘數一定要 小於除數 ；<br>
+                餘數最小是 1，最大比除數少 1。</p>
+                <p>答：除數是 7，所以餘數可能是：1、2、3、4、5、6</p>
+            </div>
+            <button class="finish-btn" onclick="returnToMenu()">🎉 完成單元，回目錄</button>
+        </div>
+
+        <div id="c9" class="exercise-section">
+            <button class="top-back-btn" onclick="returnToMenu()">⬅ 返回目錄</button>
+            <div class="section-header">第九關：等量代換</div>
+
+            <div class="card card-question">
+                <h3><span class="title-icon">📜</span>第 1 題</h3>
+                <p>在市集上有個規定，1頭豬可以換3隻羊，1頭牛可以換5頭豬。那麼1頭牛可以換多少隻羊呢？</p>
+            </div>
+            <div class="card intro-prompt clickable-step" data-next="c9-q1-s1">
+                <h3><span class="title-icon">💡</span>思考時間</h3>
+                <p>想出來了嗎？點擊下方按鈕解鎖分析與解答！</p>
+                <div class="click-hint">查看分析與解答 👆</div>
+            </div>
+            <div class="card final-answer hidden-card" id="c9-q1-s1">
+                <h3><span class="title-icon">🏆</span>【分析與解答】</h3>
+                <p>根據題意可知，<br>
+                1頭豬可以換3隻羊，也就是說可以用3隻羊來代替1頭豬，<br>
+                那麼5頭豬就可以換3×5=15（隻）羊，<br>
+                那麼用15隻羊來代替5頭豬，<br>
+                就可以知道1頭牛可以換多少隻羊啦。</p>
+                <p>3×5<br>
+                =15（隻）</p>
+                <p>答：1頭牛可以換15隻羊。</p>
+            </div>
+
+            <hr class="q-separator">
+
+            <div class="card card-question">
+                <h3><span class="title-icon">📜</span>第 2 題</h3>
+                <p>觀察下圖，已知一個橘子40克，那麼一個蘋果多少克？</p>
+                <img src="balance_scale.png" alt="天平代換圖" class="content-img" onerror="this.style.display='none'">
+            </div>
+            <div class="card intro-prompt clickable-step" data-next="c9-q2-s1">
+                <h3><span class="title-icon">💡</span>思考時間</h3>
+                <p>想出來了嗎？點擊下方按鈕解鎖分析與解答！</p>
+                <div class="click-hint">查看分析與解答 👆</div>
+            </div>
+            <div class="card final-answer hidden-card" id="c9-q2-s1">
+                <h3><span class="title-icon">🏆</span>【分析與解答】</h3>
+                <p>由圖可知，天平是平衡的，說明左盤和右盤裡的水果質量相等。 仔細觀察發現， 右盤比左盤少了 1 個蘋果，多了 2 個橘子，說明 1 個蘋果的質量等於 2 個橘子的質量。</p>
+                <p>1 個橘子重 40 克， 1 個蘋果的質量應：<br>
+                40×2= 80（克）。</p>
+                <p>答：一個蘋果80克。</p>
+            </div>
+            <button class="finish-btn" onclick="returnToMenu()">🎉 完成單元，回目錄</button>
+        </div>
+
+        <div id="c10" class="exercise-section">
+            <button class="top-back-btn" onclick="returnToMenu()">⬅ 返回目錄</button>
+            <div class="section-header">第十關：植樹問題</div>
+
+            <div class="card card-question">
+                <h3><span class="title-icon">📜</span>第 1 題</h3>
+                <p>一條長900米的公路，在公路的兩邊每隔20米種一棵樹，起點與終點是站牌，不用種樹，那麼一共要種多少棵樹？</p>
+            </div>
+            <div class="card intro-prompt clickable-step" data-next="c10-q1-s1">
+                <h3><span class="title-icon">💡</span>思考時間</h3>
+                <p>想出來了嗎？點擊下方按鈕解鎖分析與解答！</p>
+                <div class="click-hint">查看分析與解答 👆</div>
+            </div>
+            <div class="card final-answer hidden-card" id="c10-q1-s1">
+                <h3><span class="title-icon">🏆</span>【分析與解答】</h3>
+                <p>在這一題中，有句話我們要留意，“起點與終點是站牌，不用種樹”，這裡首先要提到植樹問題有三種情況：<br>
+                1.兩端都要種樹的<br>
+                2.一端種樹，另一端不種樹<br>
+                3.兩端都不種樹<br>
+                而這句話就代表此題屬於第三種情況兩端都不種樹。那麼就有：樹數=段數-1</p>
+                <p>路一邊的樹數：900÷20-1<br>
+                =44（棵）</p>
+                <p>兩邊一共的樹數：44×2<br>
+                =88（棵）</p>
+                <p>答：一共要種88棵樹。</p>
+            </div>
+
+            <hr class="q-separator">
+
+            <div class="card card-question">
+                <h3><span class="title-icon">📜</span>第 2 題</h3>
+                <p>在一幢樓裡， 子安 步行到 6 樓，要走 80 級臺階。如果他要步行到 8樓，那麼要走多少級臺階？</p>
+            </div>
+            <div class="card intro-prompt clickable-step" data-next="c10-q2-s1">
+                <h3><span class="title-icon">💡</span>思考時間</h3>
+                <p>想出來了嗎？點擊下方按鈕解鎖分析與解答！</p>
+                <div class="click-hint">查看分析與解答 👆</div>
+            </div>
+            <div class="card final-answer hidden-card" id="c10-q2-s1">
+                <h3><span class="title-icon">🏆</span>【分析與解答】</h3>
+                <p>此題可以用植樹問題的思路來解決，屬於兩端都種樹的情況，所以段數=樹數-1 ，可得：</p>
+                <p>每層的臺階數：<br>
+                80÷（ 6 - 1） = 16（級）</p>
+                <p>走到8樓的臺階數：<br>
+                16×（ 8- 1） =112（級）</p>
+                <p>答： 如果 他 要步行到 8 樓， 那麼要走 112 級臺階。</p>
+            </div>
+            <button class="finish-btn" onclick="returnToMenu()">🎉 完成所有單元，回首頁</button>
+        </div>
+
+    </div>
+
+    <script>
+        // 1. 初始化 LaTeX 渲染
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: '$$', right: '$$', display: true},
+                    {left: '$', right: '$', display: false}
+                ]
+            });
+            bindUnlockEvents();
+        });
+
+        // 2. 進入專注模式：隱藏目錄，顯示指定題目
+        function startExercise(id) {
+            document.getElementById('menu-view').style.display = 'none';
+            document.querySelectorAll('.exercise-section').forEach(s => s.style.display = 'none');
+            
+            const target = document.getElementById(id);
+            if (target) {
+                target.style.display = 'block';
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // 3. 返回目錄模式，並「重置所有解鎖狀態」
+        function returnToMenu() {
+            document.querySelectorAll('.exercise-section').forEach(s => s.style.display = 'none');
+            document.getElementById('menu-view').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // 狀態重置邏輯
+            document.querySelectorAll('.hidden-card.show').forEach(card => {
+                card.classList.remove('show');
+            });
+
+            document.querySelectorAll('.step-unlocked').forEach(step => {
+                step.classList.remove('step-unlocked');
+                step.classList.add('clickable-step');
+                const hint = step.querySelector('.click-hint');
+                if (hint) {
+                    hint.style.display = 'block';
+                }
+            });
+        }
+
+        // 4. 智慧解鎖邏輯 (非破壞性隱藏)
+        function bindUnlockEvents() {
+            const allSteps = document.querySelectorAll('.clickable-step');
+            
+            allSteps.forEach(step => {
+                step.addEventListener('click', function() {
+                    if (this.classList.contains('step-unlocked')) return;
+
+                    const nextId = this.getAttribute('data-next');
+                    const nextEl = document.getElementById(nextId);
+                    
+                    if (nextEl) {
+                        nextEl.classList.add('show');
+                        
+                        const hint = this.querySelector('.click-hint');
+                        if (hint) {
+                            hint.style.display = 'none';
+                        }
+                        
+                        this.classList.remove('clickable-step');
+                        this.classList.add('step-unlocked');
+                        
+                        setTimeout(() => {
+                            nextEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }, 200);
+                    }
+                });
+            });
+        }
+    </script>
+</body>
+</html>
